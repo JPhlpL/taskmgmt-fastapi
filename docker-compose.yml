@@ -1,0 +1,10 @@
+# docker-compose.yml
+services:
+  web:
+    build: .
+    volumes:
+      - .:/code
+    env_file:
+      - .env.local
+    ports:
+      - "80:80"

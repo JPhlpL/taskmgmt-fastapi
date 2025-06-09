@@ -1,0 +1,9 @@
+
+# production
+/build
+
+# FastPI Venv
+venv/
+src/__pycache__/
+*.log 
+.env.local
