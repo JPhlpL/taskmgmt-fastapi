@@ -1,9 +1,10 @@
-# src/schemas/task_schema.py
 from pydantic import BaseModel, EmailStr, ConfigDict
 from datetime import datetime
+from uuid import UUID
 
 
 class TaskSchema(BaseModel):
+    id: UUID
     email: EmailStr
     details: str
     created_at: datetime
