@@ -1,15 +1,17 @@
-from pydantic import BaseModel, EmailStr
+# src/schemas/task_schema.py
+from pydantic import BaseModel, EmailStr, ConfigDict
 from datetime import datetime
-from typing import Optional
-from uuid import UUID
-    
-class Contact(BaseModel):
-    id: Optional[UUID] = None
-    name: Optional[str] = None
-    email: Optional[EmailStr] = None
-    phone_number: Optional[str] = None
-    createdAt: Optional[datetime] = None
-    updatedAt: Optional[datetime] = None
-    
-    class Config:
-        from_attributes = True
+
+
+class TaskSchema(BaseModel):
+    email: EmailStr
+    details: str
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class CreateTaskRequest(BaseModel):
+    email: EmailStr
+    details: str
