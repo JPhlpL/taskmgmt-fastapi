@@ -1,19 +1,21 @@
+# Dockerfile
 
-FROM python:3.11
+# Use an official Python image
+FROM python:3.11-slim
 
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-WORKDIR /code
+# Create working directory
+WORKDIR /app
 
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-COPY ./requirements.txt /code/requirements.txt
+# Copy the application code
+COPY . .
 
-
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-
-
-COPY ./src /code/src
-
-COPY ./mypy.ini /code/mypy.ini
-
-
-CMD ["fastapi", "run", "src/main.py", "--port", "80"]
+# Set the default command
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80"]
