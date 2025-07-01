@@ -4,9 +4,15 @@ from src.schemas.schemas import CreateTaskRequest, TaskSchema
 from src.services.taskService import TaskService
 from src.utils.auth import verify_auth_token
 from typing import List
+from fastapi.responses import JSONResponse
 
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
 service = TaskService()
+
+
+@router.get("/health-check")
+async def health_check_endpoint() -> JSONResponse:
+    return JSONResponse({"status": "working!"})
 
 
 @router.post("/", response_model=TaskSchema)
