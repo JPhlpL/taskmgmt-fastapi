@@ -1,3 +1,8 @@
+# To-Do
+> ** We need to have a specific ip dedicated for each time that we push an image
+> ** I noticed that every time revision, the ip address also changes
+> ** Make a CI/CD pipeline for automatically deploying the new image version with proper tag definition until it selects to the new revision
+
 # 🚀 ECS Deployment Guide with Semantic + Date-Based Versioning
 
 > ✅ **Current Version:** `taskmgmt-api:v0.0.1-20250701`
@@ -39,9 +44,7 @@ You can verify this in the AWS Console:
 
 ---
 
-## 🧱 Step 3: Register New ECS Task Definition Revision
-
-### 🖥 Option A: AWS Console
+## 🧱 Step 3: Register New ECS Task Definition Revision through AWS Console
 
 1. Go to **ECS > Task Definitions**
 
@@ -59,9 +62,7 @@ You can verify this in the AWS Console:
 
 ---
 
-## 🚦 Step 4: Deploy New Task Definition via ECS Service
-
-### 🖥 Option A: AWS Console
+## 🚦 Step 4: Deploy New Task Definition via ECS Service through AWS Console
 
 1. Go to **ECS > Clusters > Your Cluster (e.g., `taskmgmt-api-cluster`)**
 2. Click **“Services”**
