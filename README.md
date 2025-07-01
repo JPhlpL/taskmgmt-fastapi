@@ -15,11 +15,11 @@ A simple Task Management API built with **FastAPI**, **MongoDB Atlas**, and **Py
 | ✅      | `PUT /tasks/{id}`                 | Update task by UUID                                |
 | ✅      | `DELETE /tasks/{id}`              | Delete task by UUID                                |
 | 🕐     | Validation for duplicate tasks    | Prevent creating same task twice (optional)        |
+| ⬜      | User login/authentication         | JWT or OAuth integration                           |
 | ⬜      | Pagination for task lists         | `/tasks/?email=abc@example.com&page=1&size=10`     |
 | ⬜      | Search/filter by content or date  | Full-text or field filtering                       |
 | ⬜      | Mark task as completed/incomplete | Add `status: str` (e.g., pending, done)            |
 | ⬜      | Due dates & reminders             | Add `due_date`, `reminder_sent`                    |
-| ⬜      | User login/authentication         | JWT or OAuth integration                           |
 | ⬜      | Rate limiting / abuse protection  | Prevent spam task creation                         |
 | ⬜      | AI Task Suggestions               | Based on user history (future `prompts/`)          |
 | ⬜      | Docker & deployment support       | `Dockerfile`, `docker-compose.yml`, `.env support` |
