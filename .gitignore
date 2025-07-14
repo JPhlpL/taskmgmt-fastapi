@@ -8,3 +8,5 @@ src/__pycache__/
 *.log 
 .env.local
 bearer-token.txt
+scripts/clerk_rsa_public.pem
+scripts/clerk_rsa_private.pem
