@@ -1,7 +1,7 @@
 # main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.routers import tasks
+from src.routers import tasks, debug
 from src.core.logger import setup_logger
 
 app = FastAPI()
@@ -16,3 +16,4 @@ app.add_middleware(
 )
 
 app.include_router(tasks.router)
+app.include_router(debug.router)

@@ -1,94 +1,69 @@
+# src/utils/auth.py
+
 import os
-import json
-import requests
-from functools import lru_cache
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
-from jose.utils import base64url_decode
-from typing import Dict, List
 
 # ── CONFIG ─────────────────────────────────────────────────────────────────────
 
-# Local PEM fallback
-ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
-PEM_PATH = os.path.join(ROOT_DIR, "scripts", "clerk_rsa_public.pem")
+# Calculate project root (two levels up from this file: src/utils -> src -> App)
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+PEM_PATH = os.getenv(
+    "CLERK_PUBLIC_KEY_PATH", os.path.join(ROOT_DIR, "scripts", "clerk_rsa_public.pem")
+)
 
-# Clerk issuer & JWKS endpoint
 ISSUER = "https://smooth-gobbler-4.clerk.accounts.dev"
-JWKS_URL = ISSUER + "/.well-known/jwks.json"
 
-# HTTP Bearer scheme
-bearer = HTTPBearer()
+# ── LOAD PEM ───────────────────────────────────────────────────────────────────
 
-# ── UTILITIES ──────────────────────────────────────────────────────────────────
+if not os.path.exists(PEM_PATH):
+    raise RuntimeError(f"Clerk public key not found at {PEM_PATH}")
 
+with open(PEM_PATH, "r") as key_file:
+    RSA_PUBLIC_KEY = key_file.read()
 
-@lru_cache()  # cache the JWKS for the lifetime of the process
-def get_jwks() -> Dict:
-    """Fetch and cache Clerk’s JWKS."""
-    resp = requests.get(JWKS_URL, timeout=5)
-    if not resp.ok:
-        raise HTTPException(503, "Cannot fetch JWKS from Clerk")
-    return resp.json()
+# ── SECURITY DEPENDENCY ─────────────────────────────────────────────────────────
 
-
-def get_signing_key(token: str):
-    """
-    Extracts `kid` from token header, finds matching JWK and
-    returns a PEM-formatted public key.
-    """
-    header = jwt.get_unverified_header(token)
-    jwks = get_jwks().get("keys", [])
-    for jwk in jwks:
-        if jwk["kid"] == header.get("kid"):
-            # jose expects the JWK dict as JSON string
-            return jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(jwk))
-    # Fallback: try static PEM if JWKS lookup fails
-    if os.path.exists(PEM_PATH):
-        return open(PEM_PATH).read()
-    raise HTTPException(401, "Invalid token `kid` – no matching JWK or PEM")
-
-
-# ── DEPENDENCIES ────────────────────────────────────────────────────────────────
+bearer_scheme = HTTPBearer()
 
 
 def verify_jwt_token(
-    credentials: HTTPAuthorizationCredentials = Depends(bearer),
-) -> Dict:
+    creds: HTTPAuthorizationCredentials = Security(bearer_scheme),
+) -> dict:
     """
-    1. Reads `Authorization: Bearer <token>`
-    2. Fetches signing key (JWKS or local PEM)
-    3. Verifies RS256 signature, `iss`, `exp`
-    4. Returns the decoded payload (custom + standard claims)
+    1. Reads Authorization: Bearer <token>
+    2. Verifies RS256 signature against local PEM, checks `iss` and `exp`
+    3. Returns decoded payload (custom + standard claims)
     """
-    token = credentials.credentials
+    token = creds.credentials
     try:
-        key = get_signing_key(token)
         payload = jwt.decode(
             token,
-            key,
+            RSA_PUBLIC_KEY,
             algorithms=["RS256"],
             issuer=ISSUER,
-            options={"verify_aud": False},  # set `audience=` + True if you use `aud`
+            options={"verify_aud": False},  # set audience if you need it
         )
-    except JWTError:
-        raise HTTPException(401, "Invalid or expired JWT token")
+    except JWTError as e:
+        raise HTTPException(status_code=401, detail="Invalid or expired JWT token")
 
     return payload
 
 
-def require_scopes(required: List[str]):
+def require_scopes(required_scopes: list[str]):
     """
-    Dependency factory: ensures `payload["scopes"]` includes all `required`.
-    Raises 403 if any are missing.
+    Returns a dependency that ensures payload['scopes'] includes all required_scopes.
+    Raises HTTPException(403) if any are missing.
     """
 
-    def dependency(claims: Dict = Depends(verify_jwt_token)):
-        scopes = claims.get("scopes", [])
-        missing = [s for s in required if s not in scopes]
+    def dependency(claims: dict = Depends(verify_jwt_token)):
+        token_scopes = claims.get("scopes", [])
+        missing = [s for s in required_scopes if s not in token_scopes]
         if missing:
-            raise HTTPException(403, f"Missing required scopes: {missing}")
+            raise HTTPException(
+                status_code=403, detail=f"Missing required scopes: {missing}"
+            )
         return claims
 
     return dependency

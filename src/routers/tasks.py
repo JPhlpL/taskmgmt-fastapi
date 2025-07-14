@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Security
 from fastapi.responses import JSONResponse
 from typing import List
 
@@ -6,13 +6,12 @@ from src.schemas.schemas import CreateTaskRequest, TaskSchema
 from src.services.taskService import TaskService
 from src.utils.auth import verify_jwt_token, require_scopes
 
-router = APIRouter(prefix="/tasks", tags=["Tasks"])
+router = APIRouter(
+    prefix="/tasks",
+    dependencies=[Security(verify_jwt_token)],  # applies to all ops
+    # OR per-operation: use `Security(...)` in your decorator
+)
 service = TaskService()
-
-
-@router.get("/health-check")
-async def health_check_endpoint() -> JSONResponse:
-    return JSONResponse({"status": "working!"})
 
 
 @router.post(
