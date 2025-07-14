@@ -10,3 +10,4 @@ src/__pycache__/
 bearer-token.txt
 scripts/clerk_rsa_public.pem
 scripts/clerk_rsa_private.pem
+sample-bearer-token.txt
