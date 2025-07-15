@@ -5,7 +5,7 @@
 
 # 🚀 ECS Deployment Guide with Semantic + Date-Based Versioning
 
-> ✅ **Current Version:** `taskmgmt-api:v0.0.1-20250701`
+> ✅ **Current Version:** `taskmgmt-api:v0.1.0-20250715`
 > 🗂 **Format:** `taskmgmt-api:v[semver]-[YYYYMMDD]`
 > 📦 **Repository:** `taskmgmt-api`
 
@@ -14,8 +14,7 @@
 ## 🔐 Step 0: Authenticate Docker to AWS ECR
 
 ```bash
-aws ecr get-login-password --region [region] \
-| docker login --username AWS --password-stdin [your_account_id].dkr.ecr.[region].amazonaws.com
+aws ecr get-login-password --region [region] | docker login --username AWS --password-stdin [your_account_id].dkr.ecr.[region].amazonaws.com
 ```
 
 > Replace `[region]` and `[your_account_id]` with your actual AWS region and account ID.
@@ -25,7 +24,7 @@ aws ecr get-login-password --region [region] \
 ## 🛠 Step 1: Build Docker Image with Version Tag
 
 ```bash
-docker build -t [your_account_id].dkr.ecr.[region].amazonaws.com/taskmgmt-api:v0.0.1-20250701 .
+docker build -t [your_account_id].dkr.ecr.[region].amazonaws.com/taskmgmt-api:v0.1.0-20250715 .
 ```
 
 > Make sure you're in the project root (where the Dockerfile is).
@@ -35,7 +34,7 @@ docker build -t [your_account_id].dkr.ecr.[region].amazonaws.com/taskmgmt-api:v0
 ## 📤 Step 2: Push Docker Image to AWS ECR
 
 ```bash
-docker push [your_account_id].dkr.ecr.[region].amazonaws.com/taskmgmt-api:v0.0.1-20250701
+docker push [your_account_id].dkr.ecr.[region].amazonaws.com/taskmgmt-api:v0.1.0-20250715
 ```
 
 You can verify this in the AWS Console:
@@ -55,7 +54,7 @@ You can verify this in the AWS Console:
 4. In the **Container definitions** section, update the **Image** to:
 
    ```
-   [your_account_id].dkr.ecr.[region].amazonaws.com/taskmgmt-api:v0.0.1-20250701
+   [your_account_id].dkr.ecr.[region].amazonaws.com/taskmgmt-api:v0.1.0-20250715
    ```
 
 5. Leave other settings the same → Click **"Create"**
