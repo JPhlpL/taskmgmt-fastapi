@@ -4,10 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.routers import tasks, debug
 from src.core.logger import setup_logger
 
-app = FastAPI()
+web_app = FastAPI()
 setup_logger()
 
-app.add_middleware(
+web_app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
@@ -15,5 +15,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(tasks.router)
-app.include_router(debug.router)
+web_app.include_router(tasks.router)
+web_app.include_router(debug.router)
