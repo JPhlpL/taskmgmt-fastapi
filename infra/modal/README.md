@@ -27,4 +27,6 @@ modal config set-environment main
 `
 
 `
-modal deploy src.main --tag $(GIT_HASH)  ($(GIT_HASH) or the manual value of git rev-parse HEAD)
+git rev-parse --short HEAD > .git_hash
+set /p GIT_HASH=<.git_hash
+modal deploy infra.modal.main --tag %GIT_HASH%
