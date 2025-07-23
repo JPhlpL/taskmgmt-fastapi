@@ -15,6 +15,7 @@ A simple Task Management API built with **FastAPI**, **MongoDB Atlas**, and **Py
 | ✅      | `PUT /tasks/{id}`                 | Update task by UUID                                |
 | ✅      | `DELETE /tasks/{id}`              | Delete task by UUID                                |
 | 🕐     | Validation for duplicate tasks    | Prevent creating same task twice (optional)        |
+| 🕐     | Add LogFire                       | Logstream Proper                                   |
 | ⬜      | User login/authentication         | JWT or OAuth integration                           |
 | ⬜      | Pagination for task lists         | `/tasks/?email=abc@example.com&page=1&size=10`     |
 | ⬜      | Search/filter by content or date  | Full-text or field filtering                       |
