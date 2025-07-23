@@ -24,7 +24,7 @@ aws ecr get-login-password --region [region] | docker login --username AWS --pas
 ## 🛠 Step 1: Build Docker Image with Version Tag
 
 ```bash
-docker build -t [your_account_id].dkr.ecr.[region].amazonaws.com/taskmgmt-api:v0.1.0-20250715 .
+docker build -f infra/aws/Dockerfile -t [your_account_id].dkr.ecr.[region].amazonaws.com/taskmgmt-api:v0.1.0-20250715 .
 ```
 
 > Make sure you're in the project root (where the Dockerfile is).
