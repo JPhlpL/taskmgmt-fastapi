@@ -38,5 +38,7 @@ api_image = (
         "modal==1.0.5",
         # Email Validator
         "email_validator==2.2.0",
+        # AI
+        "openai==0.28.0",
     )
 )
