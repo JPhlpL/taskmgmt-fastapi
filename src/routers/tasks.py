@@ -2,16 +2,19 @@ from fastapi import APIRouter, Depends, HTTPException, Security
 from fastapi.responses import JSONResponse
 from typing import List
 
-from src.schemas.schemas import CreateTaskRequest, TaskSchema
+from src.schemas.schemas import CreateTaskRequest, TaskSchema, ChatRequest
 from src.services.taskService import TaskService
+from src.services.aiService import AIService
 from src.utils.auth import verify_jwt_token, require_scopes
 
 router = APIRouter(
     prefix="/tasks",
     dependencies=[Security(verify_jwt_token)],  # applies to all ops
+    tags=["tasks"],
     # OR per-operation: use `Security(...)` in your decorator
 )
 service = TaskService()
+ai_service = AIService()
 
 
 @router.post(
@@ -47,3 +50,13 @@ async def update_task(id: str, payload: CreateTaskRequest):
 @router.delete("/{id}", dependencies=[Depends(require_scopes(["tasks:delete"]))])
 async def delete_task(id: str):
     return await service.delete_task(id)
+
+
+@router.post(
+    "/chat",
+    summary="chat with bot",
+    dependencies=[Depends(require_scopes(["tasks:create"]))],
+)
+async def chat_openai(request: ChatRequest):
+    result = await service.generate_chat(request.prompt)
+    return JSONResponse(content={"response": result})

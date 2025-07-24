@@ -14,6 +14,7 @@ colorama==0.4.6
 cryptography==45.0.5
 decouple==0.0.7
 Deprecated==1.2.18
+distro==1.9.0
 dnspython==2.7.0
 dotenv==0.9.9
 ecdsa==0.19.1
@@ -35,6 +36,7 @@ idna==3.10
 importlib_metadata==8.5.0
 isort==5.13.2
 Jinja2==3.1.6
+jiter==0.10.0
 logfire==3.7.1
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
@@ -44,6 +46,7 @@ motor==3.4.0
 multidict==6.6.3
 mypy==1.14.0
 mypy_extensions==1.1.0
+openai==0.28.0
 opentelemetry-api==1.30.0
 opentelemetry-exporter-otlp-proto-common==1.30.0
 opentelemetry-exporter-otlp-proto-http==1.30.0
@@ -80,6 +83,7 @@ starlette==0.38.6
 synchronicity==0.9.16
 tenacity==9.0.0
 toml==0.10.2
+tqdm==4.67.1
 typer==0.16.0
 types-certifi==2021.10.8.3
 types-requests==2.32.0.20250306

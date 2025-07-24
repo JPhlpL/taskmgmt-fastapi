@@ -1,6 +1,7 @@
 # src/services/task_service.py
 from src.repositories.taskRepository import TaskRepository
 from src.schemas.schemas import CreateTaskRequest, TaskSchema
+from src.services.aiService import AIService
 from src.core.logger import setup_logger
 from typing import List
 from fastapi import HTTPException
@@ -11,6 +12,7 @@ logger = setup_logger()
 class TaskService:
     def __init__(self):
         self.repo = TaskRepository()
+        self.ai = AIService()
 
     async def create_task(self, payload: CreateTaskRequest) -> TaskSchema:
         logger.info(f"Creating task for: {payload.email}")
@@ -32,3 +34,9 @@ class TaskService:
         if not success:
             raise HTTPException(status_code=404, detail="Task not found")
         return {"message": f"Task {id} deleted successfully"}
+
+    # New method to wrap your OpenAI call
+    async def generate_chat(self, prompt: str) -> str:
+        if not prompt:
+            raise HTTPException(status_code=400, detail="Prompt cannot be empty")
+        return await self.ai.generate_chat(prompt)

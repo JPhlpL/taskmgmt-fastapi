@@ -16,3 +16,6 @@ class TaskSchema(BaseModel):
 class CreateTaskRequest(BaseModel):
     email: EmailStr
     details: str
+
+class ChatRequest(BaseModel):
+    prompt: str
