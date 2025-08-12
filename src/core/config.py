@@ -15,3 +15,11 @@ def get_openai_key():
 
 def get_openai_admin_key():
     return os.getenv("OPENAI_API_ADMIN_KEY")
+
+
+def get_taskmgmt_username_doc():
+    return os.getenv("TASKMGMT_USERNAME_DOC")
+
+
+def get_taskmgmt_password_doc():
+    return os.getenv("TASKMGMT_PASSWORD_DOC")
