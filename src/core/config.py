@@ -9,5 +9,9 @@ def get_api_key():
     return os.getenv("X_AUTH_API_KEY")
 
 
-def get_openapi_key():
+def get_openai_key():
     return os.getenv("OPENAI_API_KEY")
+
+
+def get_openai_admin_key():
+    return os.getenv("OPENAI_API_ADMIN_KEY")
