@@ -1,9 +1,11 @@
-Ongoing:
+**Ongoing:**
 1. Make a simple chatbot with AI integration
 2. Make a prefix for all logging
+3. Reupload this again on modal
+4. make taskmgmt_username and password more robust
 
 
-
+**Some Tasks**
 ```bash
 | Status | Feature                           | Notes                                              |
 | ------ | --------------------------------- | -------------------------------------------------- |
