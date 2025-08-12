@@ -23,3 +23,7 @@ def get_taskmgmt_username_doc():
 
 def get_taskmgmt_password_doc():
     return os.getenv("TASKMGMT_PASSWORD_DOC")
+
+
+def get_mongo_uri():
+    return os.getenv("MONGO_URI")
