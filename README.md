@@ -4,28 +4,6 @@ A simple Task Management API built with **FastAPI**, **MongoDB Atlas**, and **Py
 
 ---
 
-
-### 📋 Tasks To-Do
-
-```bash
-| Status | Feature                           | Notes                                              |
-| ------ | --------------------------------- | -------------------------------------------------- |
-| ✅      | `POST /tasks/`                    | Create a task with email and details               |
-| ✅      | `GET /tasks/?email=`              | Fetch all tasks for a given email                  |
-| ✅      | `PUT /tasks/{id}`                 | Update task by UUID                                |
-| ✅      | `DELETE /tasks/{id}`              | Delete task by UUID                                |
-| 🕐     | Validation for duplicate tasks    | Prevent creating same task twice (optional)        |
-| 🕐     | Add LogFire                       | Logstream Proper                                   |
-| ⬜      | User login/authentication         | JWT or OAuth integration                           |
-| ⬜      | Pagination for task lists         | `/tasks/?email=abc@example.com&page=1&size=10`     |
-| ⬜      | Search/filter by content or date  | Full-text or field filtering                       |
-| ⬜      | Mark task as completed/incomplete | Add `status: str` (e.g., pending, done)            |
-| ⬜      | Due dates & reminders             | Add `due_date`, `reminder_sent`                    |
-| ⬜      | Rate limiting / abuse protection  | Prevent spam task creation                         |
-| ⬜      | AI Task Suggestions               | Based on user history (future `prompts/`)          |
-| ⬜      | Docker & deployment support       | `Dockerfile`, `docker-compose.yml`, `.env support` |
-```
-
 ## 🚀 Features
 
 * ✅ Task creation with email and details
@@ -69,7 +47,7 @@ X_AUTH_API_KEY=e33739abbd2a02c2e988d67ebe5a26f865231443a6d3adf57d021e0eeda6ef042
 ### 5. ▶️ Run the Server
 
 ```bash
-uvicorn src.main:app --reload
+uvicorn src.main:web_app --reload
 ```
 
 ### 🔐 Authorization Header
