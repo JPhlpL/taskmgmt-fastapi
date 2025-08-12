@@ -1,8 +1,10 @@
 **Ongoing:**
 1. Make a simple chatbot with AI integration
-2. Make a prefix for all logging
-3. Reupload this again on modal
-4. make taskmgmt_username and password more robust
+2. Urgent! make a workaround about env's for local and modal container (including aws container setup)
+3. Make a prefix for all logging
+4. Reupload this again on modal
+5. make taskmgmt_username and password more robust
+6. Applying Git Tag for deploying container in Modal
 
 
 **Some Tasks**
