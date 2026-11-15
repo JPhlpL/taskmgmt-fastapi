@@ -6,6 +6,7 @@
 # 🚀 ECS Deployment Guide with Semantic + Date-Based Versioning
 
 > ✅ **Current Version:** `taskmgmt-api:v0.1.0-20250715`
+> 🏷 **Git Tag:** [`v0.1.0`](https://github.com/JPhlpL/taskmgmt-fastapi/releases/tag/v0.1.0)
 > 🗂 **Format:** `taskmgmt-api:v[semver]-[YYYYMMDD]`
 > 📦 **Repository:** `taskmgmt-api`
 
